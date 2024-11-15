@@ -1,4 +1,4 @@
-# nightowl
+# Special Effect
 
 # SpecialEffect - 특수 효과 프로그램
 
