@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "special_effect"
+version = "1.0.0"
+description = "사진에 다양한 특수 효과를 적용할 수 있는 Python GUI 애플리케이션"
+authors = [
+    { name = "정채원" }
+]
+license = { text = "MIT" }
+dependencies = [
+    "PyQt6==6.5.1",
+    "opencv-python==4.8.0.76",
+    "opencv-contrib-python==4.8.0.76",
+    "Pillow==10.0.0"
+]
+readme = "README.md"
+keywords = ["image processing", "GUI", "special effects", "PyQt6", "OpenCV"]
+homepage = "https://github.com/your-repository/special_effect"
+repository = "https://github.com/your-repository/special_effect"
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "mypy>=1.0"
+]
+
+[tool.setuptools]
+packages = ["special_effect"]
+
+[tool.setuptools]
+packages = ["special_effect"]
+
+[tool.setuptools.package-data]
+special_effect = ["*.png", "*.jpg", "*.bmp"]
+
