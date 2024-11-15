@@ -32,9 +32,6 @@ dev = [
 [tool.setuptools]
 packages = ["special_effect"]
 
-[tool.setuptools]
-packages = ["special_effect"]
-
 [tool.setuptools.package-data]
 special_effect = ["*.png", "*.jpg", "*.bmp"]
 
