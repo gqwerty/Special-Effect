@@ -3,6 +3,7 @@ import numpy as np
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 import sys
+import os
 from PIL import Image
 
 class SpecialEffect(QMainWindow):
@@ -70,10 +71,23 @@ class SpecialEffect(QMainWindow):
 
     def pictureOpenFunction(self):
         fname = QFileDialog.getOpenFileName(self, "사진읽기", "./")
-        self.img = cv.imread(fname[0])
-        if self.img is None: 
-            self.label.setText("파일을 찾을 수 없습니다.")
+        
+        # 선택한 파일 경로 절대 경로로 변환
+        file_path = fname[0]
+        if not file_path:
+            self.label.setText("파일을 선택하지 않았습니다.")
             return
+
+        # 경로를 절대 경로로 변환하고, 경로가 유효한지 확인
+        file_path = os.path.abspath(file_path)
+        print(f"선택한 파일 경로: {file_path}")  # 디버깅용 출력
+        
+        # 이미지 파일 읽기
+        self.img = cv.imread(file_path)
+        if self.img is None: 
+            self.label.setText(f"파일을 찾을 수 없습니다: {file_path}")
+            return
+        
         self.img = self.resize_image(self.img)
         cv.imshow("Painting", self.img)
 
@@ -124,9 +138,6 @@ class SpecialEffect(QMainWindow):
         # 유화 효과 적용
         self.effect_img = cv.xphoto.oilPainting(self.img, radius, dynRatio, cv.COLOR_BGR2Lab)
         cv.imshow("Oil Painting", self.effect_img)
-
-
-
 
     def blurFunction(self):
         if self.img is None: 
