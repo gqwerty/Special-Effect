@@ -116,8 +116,17 @@ class SpecialEffect(QMainWindow):
         if self.img is None: 
             self.label.setText("먼저 사진을 읽어오세요.")
             return
-        self.effect_img = cv.xphoto.oilPainting(self.img, 10, 1, cv.COLOR_BGR2Lab)
+        
+        # 슬라이더 값을 사용하여 유화 효과의 강도 조절
+        radius = self.sigma_s_slider.value()  # 슬라이더 값으로 radius 설정
+        dynRatio = max(1, int(radius * 0.1))  # dynRatio는 1 이상이어야 함
+
+        # 유화 효과 적용
+        self.effect_img = cv.xphoto.oilPainting(self.img, radius, dynRatio, cv.COLOR_BGR2Lab)
         cv.imshow("Oil Painting", self.effect_img)
+
+
+
 
     def blurFunction(self):
         if self.img is None: 
@@ -129,23 +138,23 @@ class SpecialEffect(QMainWindow):
         cv.imshow("Blurred Image", self.effect_img)
 
     def saveFunction(self):
-        if self.effect_img is None:  
+        if self.effect_img is None:
             self.label.setText("먼저 효과를 적용하세요.")
             return
 
-        fname, _ = QFileDialog.getSaveFileName(self, "파일 저장", "./", "Images (*.jpg *.png *.bmp)")
-        if not fname:  
-            return
+        # 선택된 특수 효과가 무엇인지 가져오기
+        effect = self.pickCombo.currentText()
 
-        if not (fname.endswith('.jpg') or fname.endswith('.png') or fname.endswith('.bmp')):
-            fname += '.jpg'
-        
-        try:
-            img = Image.fromarray(self.effect_img)
+        # BGR -> RGB 변환 후 PIL로 저장
+        img_rgb = cv.cvtColor(self.effect_img, cv.COLOR_BGR2RGB)
+        img = Image.fromarray(img_rgb)
+
+        fname, _ = QFileDialog.getSaveFileName(self, "파일 저장", "./", "Images (*.jpg *.png *.bmp)")
+        if fname:
+            if not (fname.endswith('.jpg') or fname.endswith('.png') or fname.endswith('.bmp')):
+                fname += '.jpg'
             img.save(fname)
             self.label.setText(f"파일이 {fname}에 저장되었습니다.")
-        except Exception as e:
-            self.label.setText(f"저장 오류: {str(e)}")
 
     def quitFunction(self):
         cv.destroyAllWindows()
