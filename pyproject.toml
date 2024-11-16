@@ -18,7 +18,8 @@ dependencies = [
 ]
 readme = "README.md"
 keywords = ["image processing", "GUI", "special effects", "PyQt6", "OpenCV"]
-repository = "https://github.com/gqwerty/Special-Effect"
+homepage = "https://github.com/your-repository/special_effect"
+repository = "https://github.com/your-repository/special_effect"
 requires-python = ">=3.9"
 
 [project.optional-dependencies]
@@ -28,6 +29,9 @@ dev = [
     "flake8>=6.0",
     "mypy>=1.0"
 ]
+
+[tool.setuptools]
+packages = ["special_effect"]
 
 [tool.setuptools]
 packages = ["special_effect"]
